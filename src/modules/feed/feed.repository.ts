@@ -19,10 +19,14 @@ export class FeedRepository extends Repository<Feed> {
   }
 
   public async findAll(): Promise<Feed[]> {
-    return this.find();
+    return this.find({ order: { name: 'DESC' } });
   }
 
   public async findById(id: string): Promise<Feed | null> {
     return this.findOneBy({ id });
+  }
+
+  public async findByPublisher(id: string): Promise<Feed[]> {
+    return this.find({ where: { publisher: { id } } });
   }
 }

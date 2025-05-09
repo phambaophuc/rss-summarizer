@@ -1,8 +1,7 @@
-import { Column, Entity, ManyToOne, OneToOne } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 
 import { BaseEntity } from './base.entity';
 import { Feed } from './feed.entity';
-import { Summary } from './summary.entity';
 
 @Entity('articles')
 export class Article extends BaseEntity {
@@ -15,15 +14,12 @@ export class Article extends BaseEntity {
   @Column('text')
   content: string;
 
+  @Column()
+  thumbnail: string;
+
   @Column({ type: 'timestamp' })
   publishedAt: Date;
 
-  @Column({ default: false })
-  isSummarized: boolean;
-
   @ManyToOne(() => Feed, (feed) => feed.articles, { onDelete: 'CASCADE' })
   feed: Feed;
-
-  @OneToOne(() => Summary, (summary) => summary.article)
-  summary: Summary;
 }

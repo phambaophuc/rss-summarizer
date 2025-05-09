@@ -1,32 +1,30 @@
 import { Injectable } from '@nestjs/common';
 
-import { PaginatedResultDto, PaginationQueryDto } from '@/common/dto';
-
-import { FeedService } from '../feed';
+import { PaginationQueryDto } from '@/common/dto';
 
 import { ArticleRepository } from './article.repository';
-import { CreateArticleDto } from './dto';
-import { ArticleDto } from './dto/article.dto';
+import {
+  ArticleDto,
+  CreateArticleDto,
+  PaginatedArticleResponseDto,
+} from './dto';
 
 @Injectable()
 export class ArticleService {
-  constructor(
-    private readonly articleRepo: ArticleRepository,
-    private readonly feedService: FeedService,
-  ) {}
+  constructor(private readonly articleRepo: ArticleRepository) {}
 
-  async findAll(
+  async findAllWithFilter(
     pagination: PaginationQueryDto,
-  ): Promise<PaginatedResultDto<ArticleDto>> {
-    const articles = await this.articleRepo.findAll(pagination);
-    return { ...articles, data: ArticleDto.toDtos(articles.data) };
+  ): Promise<PaginatedArticleResponseDto> {
+    const articles = await this.articleRepo.findAllWithFilter(pagination);
+    return { ...articles, items: ArticleDto.toDtos(articles.items) };
   }
 
   async createIfNotExists(dto: CreateArticleDto): Promise<boolean> {
     const exists = await this.articleRepo.findByUrl(dto.url);
     if (exists) return false;
 
-    await this.feedService.findById(dto.feedId);
+    // await this.feedService.findById(dto.feedId);
     await this.articleRepo.store(dto);
 
     return true;

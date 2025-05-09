@@ -3,4 +3,5 @@ export type RSSItem = {
   url: string;
   content: string;
   publishedAt: Date;
+  thumbnail: string;
 };

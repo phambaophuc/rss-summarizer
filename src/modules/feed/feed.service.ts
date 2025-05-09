@@ -19,4 +19,9 @@ export class FeedService {
     }
     return FeedDto.toDto(feed);
   }
+
+  async findByPublisher(id: string): Promise<FeedDto[]> {
+    const feeds = await this.feedRepo.findByPublisher(id);
+    return FeedDto.toDtos(feeds);
+  }
 }

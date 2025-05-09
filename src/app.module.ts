@@ -6,6 +6,9 @@ import { configuration, getTypeOrmConfig } from '@/config';
 import { RssModule } from '@/modules/rss';
 
 import { ArticleModule } from './modules/article';
+import { ExtractorModule } from './modules/extractor';
+import { FeedModule } from './modules/feed';
+import { PublisherModule } from './modules/publisher';
 
 @Module({
   imports: [
@@ -19,6 +22,10 @@ import { ArticleModule } from './modules/article';
     }),
     RssModule,
     ArticleModule,
+    FeedModule,
+    RssModule,
+    PublisherModule,
+    ExtractorModule,
   ],
 })
 export class AppModule {}

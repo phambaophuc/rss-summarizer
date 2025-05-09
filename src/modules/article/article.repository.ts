@@ -3,10 +3,10 @@ import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { PaginatedResultDto, PaginationQueryDto } from '@/common/dto';
+import { PaginatedResultDto } from '@/common/dto';
 import { Article } from '@/entities';
 
-import { CreateArticleDto } from './dto';
+import { CreateArticleDto, GetArticlesQueryDto } from './dto';
 
 @Injectable()
 export class ArticleRepository extends Repository<Article> {
@@ -21,16 +21,23 @@ export class ArticleRepository extends Repository<Article> {
     );
   }
 
-  public async findAll(
-    pagination: PaginationQueryDto,
+  public async findAllWithFilter(
+    pagination: GetArticlesQueryDto,
   ): Promise<PaginatedResultDto<Article>> {
-    const { page = 1, limit = 10 } = pagination;
+    const { feedId, publisherId, page = 1, limit = 10 } = pagination;
     const [items, total] = await this.findAndCount({
+      where: {
+        feed: {
+          id: feedId,
+          publisher: {
+            id: publisherId,
+          },
+        },
+      },
       skip: (page - 1) * limit,
       take: limit,
       relations: {
         feed: true,
-        summary: true,
       },
       order: {
         publishedAt: 'DESC',
@@ -38,7 +45,7 @@ export class ArticleRepository extends Repository<Article> {
     });
 
     return {
-      data: items,
+      items,
       meta: {
         page,
         limit,
