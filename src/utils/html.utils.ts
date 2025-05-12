@@ -1,6 +1,11 @@
 import * as cheerio from 'cheerio';
 
-const IGNORED_CLASSES = ['modal__sendreact', 'detail-info', 'main-nav'];
+const IGNORED_CLASSES = [
+  'modal__sendreact',
+  'detail-info',
+  'main-nav',
+  'breadcrumb',
+];
 
 export function preprocessHtml(html: string): string {
   const $ = cheerio.load(html);

@@ -1,3 +1,5 @@
+import { IsUrl } from 'class-validator';
+
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ExtractedContentDto {
@@ -12,4 +14,9 @@ export class ExtractedContentDto {
 
   @ApiProperty()
   published?: string;
+}
+
+export class ExtractorQuery {
+  @IsUrl()
+  url: string;
 }
