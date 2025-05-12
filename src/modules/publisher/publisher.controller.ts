@@ -1,7 +1,7 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { PublisherDto } from './dto';
+import { CreatePublisherDto, PublisherDto } from './dto';
 import { PublisherService } from './publisher.service';
 
 @Controller('publishers')
@@ -18,12 +18,17 @@ export class PublisherController {
     return this.publisherService.findAll();
   }
 
-  @Get(':id')
+  @Get(':slug')
   @ApiResponse({
     status: 200,
     type: PublisherDto,
   })
-  public async findById(@Param('id') id: string): Promise<PublisherDto> {
-    return this.publisherService.findById(id);
+  public async findBySlug(@Param('slug') slug: string): Promise<PublisherDto> {
+    return this.publisherService.findBySlug(slug);
+  }
+
+  @Post()
+  public async create(@Body() body: CreatePublisherDto): Promise<PublisherDto> {
+    return this.publisherService.create(body);
   }
 }

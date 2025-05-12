@@ -16,6 +16,10 @@ export class PublisherDto {
 
   @Expose()
   @ApiProperty()
+  slug: string;
+
+  @Expose()
+  @ApiProperty()
   homepage: string;
 
   @Expose()

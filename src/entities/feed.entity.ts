@@ -9,7 +9,7 @@ export class Feed extends BaseEntity {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   url: string;
 
   @ManyToOne(() => Publisher, (publisher) => publisher.feeds, {

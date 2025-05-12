@@ -13,7 +13,7 @@ export class ArticleController {
 
   @Get()
   @ApiQuery({ name: 'feedId', required: false })
-  @ApiQuery({ name: 'sourceId', required: false })
+  @ApiQuery({ name: 'publisherId', required: false })
   @ApiQuery({ name: 'page', required: false, type: Number, example: 1 })
   @ApiQuery({ name: 'limit', required: false, type: Number, example: 10 })
   @ApiResponse({

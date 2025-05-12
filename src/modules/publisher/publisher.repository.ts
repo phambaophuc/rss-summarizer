@@ -4,6 +4,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Publisher } from '@/entities';
+import { generateSlug } from '@/utils/slug.util';
+
+import { CreatePublisherDto } from './dto';
 
 @Injectable()
 export class PublisherRepository extends Repository<Publisher> {
@@ -25,5 +28,15 @@ export class PublisherRepository extends Repository<Publisher> {
 
   public async findById(id: string): Promise<Publisher | null> {
     return this.findOne({ where: { id }, relations: { feeds: true } });
+  }
+
+  public async findBySlug(slug: string): Promise<Publisher | null> {
+    return this.findOne({ where: { slug }, relations: { feeds: true } });
+  }
+
+  public async store(dto: CreatePublisherDto) {
+    const slug = generateSlug(dto.name);
+    const publisher = this.create({ ...dto, slug });
+    return this.save(publisher);
   }
 }

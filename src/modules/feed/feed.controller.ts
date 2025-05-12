@@ -1,7 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { FeedDto } from './dto';
+import { CreateFeedDto, FeedDto } from './dto';
 import { FeedService } from './feed.service';
 
 @Controller('feeds')
@@ -16,5 +16,10 @@ export class FeedController {
   })
   public async findAll(): Promise<FeedDto[]> {
     return this.feedService.findAll();
+  }
+
+  @Post()
+  public async create(@Body() body: CreateFeedDto): Promise<FeedDto> {
+    return this.feedService.create(body);
   }
 }

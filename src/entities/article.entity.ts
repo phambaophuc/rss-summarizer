@@ -8,7 +8,7 @@ export class Article extends BaseEntity {
   @Column()
   title: string;
 
-  @Column()
+  @Column({ unique: true })
   url: string;
 
   @Column('text')

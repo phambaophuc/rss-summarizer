@@ -5,6 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Feed } from '@/entities';
 
+import { CreateFeedDto } from './dto';
+
 @Injectable()
 export class FeedRepository extends Repository<Feed> {
   constructor(
@@ -28,5 +30,10 @@ export class FeedRepository extends Repository<Feed> {
 
   public async findByPublisher(id: string): Promise<Feed[]> {
     return this.find({ where: { publisher: { id } } });
+  }
+
+  public async store(dto: CreateFeedDto): Promise<Feed> {
+    const feed = this.create(dto);
+    return this.save(feed);
   }
 }
