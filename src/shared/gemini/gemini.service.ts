@@ -36,7 +36,8 @@ export class GeminiService {
 
     const request: GenerateContentRequest = {
       contents: [contentRequest],
-      systemInstruction: 'Tóm tắt bài viết này một cách ngắn gọn và rõ ràng.',
+      systemInstruction:
+        'Tóm tắt bài viết này một cách ngắn gọn và tập trung vào các nội dung chính của bài viết.',
       tools: [],
     };
 
