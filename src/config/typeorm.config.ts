@@ -12,6 +12,6 @@ export const getTypeOrmConfig = (
   url: configService.get('database.url'),
   ssl: { rejectUnauthorized: false },
   entities: Object.values(Entities),
-  synchronize: configService.get('database.synchronize'),
+  synchronize: false,
   logging: false,
 });

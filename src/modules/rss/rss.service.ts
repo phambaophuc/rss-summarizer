@@ -1,7 +1,7 @@
 import * as Parser from 'rss-parser';
 
 import { Injectable, Logger } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 import { ArticleService } from '../article';
 import { FeedDto, FeedService } from '../feed';
@@ -19,7 +19,7 @@ export class RssService {
     private readonly articleService: ArticleService,
   ) {}
 
-  @Cron('*/15 * * * *')
+  @Cron(CronExpression.EVERY_2_HOURS)
   async handleCron() {
     if (this.isRunning) {
       this.logger.warn('⚠️ RSS crawl skipped: previous job still running.');
